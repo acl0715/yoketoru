@@ -209,6 +209,7 @@ namespace yoketoru
                     if (IsObstacle(i))
                     {
                         //è·äQï®Ç…ìñÇΩÇÈ
+
                         nextState = State.Gameover;
                     }
                     else
