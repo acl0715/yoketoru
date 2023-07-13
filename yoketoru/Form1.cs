@@ -50,11 +50,12 @@ namespace yoketoru
         {
 
             InitializeComponent();
+
             for (int i = 0; i < LabelMax; i++)
             {
                 chrLabels[i] = new Label();
                 chrLabels[i].AutoSize = true;
-                chrLabels[i].Text = "(-ƒÖ-)";
+                chrLabels[i].Top = i*24 ;
                 Controls.Add(chrLabels[i]);
                 if (i < ObstacleIndex)
                 {
@@ -65,12 +66,12 @@ namespace yoketoru
                 else if (i < ItemIndex)
                 {
                     chrLabels[i].Text = "˜J“­";
-                    //chrLabels[i].Font = TempObstacle.Font;                    
+                    chrLabels[i].Font = tempObstacle.Font;                    
                 }
                 else
                 {
                     chrLabels[i].Text = "„‚µ";
-                    //chrLabels[i].Font = TempItem.Font;
+                    chrLabels[i].Font = tempItem.Font;
                 }
             }
         }
@@ -103,9 +104,8 @@ namespace yoketoru
                     labelHighScore.Visible = true;
                     tempObstacle.Visible = false;
                     tempItem.Visible = false;
-                    labelCopyright.Visible = true;
+                    labelCopyright.Visible = false;
                     TempPlayer.Visible = false;
-
                     break;
 
                 case State.Game:
@@ -116,6 +116,7 @@ namespace yoketoru
                     //tempObstacle.Visible = true;
                     //tempItem.Visible = true;
                     score = 0;
+                    itemCount = ItemMax;
                     timer = StartTimer;
 
                     for (int i = ObstacleIndex; i < vx.Length; i++)
@@ -276,6 +277,10 @@ namespace yoketoru
         void UpdateScore()
         {
             labelscore.Text = $"{score:00000}";
+            if (score <=0)
+            {
+                score = 0;
+            }
         }
 
 
