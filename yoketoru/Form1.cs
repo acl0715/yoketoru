@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Microsoft.VisualBasic.ApplicationServices;
+using System.Net;
 
 namespace yoketoru
 {
@@ -11,8 +12,8 @@ namespace yoketoru
         public static extern short GetAsyncKeyState(int vKey);
 
         static int PlayerMax => 1;
-        static int ItemMax => 2;
-        static int ObstacleMax => 2;
+        static int ItemMax => 8;
+        static int ObstacleMax => 8;
         static int PlayerIndex => 0;
         static int ObstacleIndex => PlayerIndex + PlayerMax;
         static int ItemIndex => ObstacleIndex + ObstacleMax;
@@ -116,6 +117,7 @@ namespace yoketoru
                     //tempObstacle.Visible = true;
                     //tempItem.Visible = true;
                     score = 0;
+                    UpdateScore();
                     itemCount = ItemMax;
                     timer = StartTimer;
 
@@ -123,6 +125,7 @@ namespace yoketoru
                     {
                         vx[i] = random.Next(-SpeedMax, SpeedMax + 1);
                         vy[i] = random.Next(-SpeedMax, SpeedMax + 1);
+                        chrLabels[i].Visible = true;
                     }
                     RondomObstacleAndItemPosition();
                     break;
@@ -131,12 +134,14 @@ namespace yoketoru
                     labelGameover.Visible = true;
                     buttonTitle.Visible = true;
                     labelHighScore.Visible = true;
+                    UpdateHighScore();
                     break;
 
                 case State.Clear:
                     labelClear.Visible = true;
                     buttonTitle.Visible = true;
                     labelHighScore.Visible = true;
+                    UpdateHighScore();
                     break;
             }
         }
@@ -171,6 +176,12 @@ namespace yoketoru
         }
         //private void buttonTitle_Click(object sender, EventArgs e)
 
+
+        private void buttonTitle_Click_1(object sender, EventArgs e)
+        {
+            nextState = State.Title;
+        }
+
         //プレイヤーの動き
         void UpdatePlayer()
         {
@@ -184,6 +195,9 @@ namespace yoketoru
         {
             for (int i = ObstacleIndex; i < chrLabels.Length; i++)
             {
+                if (!chrLabels[i].Visible) continue;
+                //if (chrLabels[i].Visible==false)continue;
+
                 chrLabels[i].Left += vx[i];
                 chrLabels[i].Top += vy[i];
 
@@ -210,7 +224,6 @@ namespace yoketoru
                     if (IsObstacle(i))
                     {
                         //障害物に当たる
-
                         nextState = State.Gameover;
                     }
                     else
@@ -277,24 +290,19 @@ namespace yoketoru
         void UpdateScore()
         {
             labelscore.Text = $"{score:00000}";
-            if (score <=0)
-            {
-                score = 0;
-            }
         }
 
-
+        void UpdateHighScore()
+        {
+            highscore = Math.Max(highscore,score);
+            labelHighScore.Text = $"High Score:{highscore:00000}";
+        }
 
         private void labelHighScore_Click(object sender, EventArgs e)
         {
 
         }
 
-        //タイトルへ 
-        private void buttonTitle_Click_1(object sender, EventArgs e)
-        {
-            nextState = State.Title;
-        }
 
         private void labelTimer_Click(object sender, EventArgs e)
         {
