@@ -12,8 +12,8 @@ namespace yoketoru
         public static extern short GetAsyncKeyState(int vKey);
 
         static int PlayerMax => 1;
-        static int ItemMax => 8;
-        static int ObstacleMax => 8;
+        static int ItemMax => 2;
+        static int ObstacleMax => 2;
         static int PlayerIndex => 0;
         static int ObstacleIndex => PlayerIndex + PlayerMax;
         static int ItemIndex => ObstacleIndex + ObstacleMax;
@@ -67,12 +67,12 @@ namespace yoketoru
                 }
                 else if (i < ItemIndex)
                 {
-                    chrLabels[i].Text = "˜J“­";
+                    chrLabels[i].Text = "š";
                     chrLabels[i].Font = tempObstacle.Font;                    
                 }
                 else
                 {
-                    chrLabels[i].Text = "„‚µ";
+                    chrLabels[i].Text = "ž";
                     chrLabels[i].Font = tempItem.Font;
                 }
             }
