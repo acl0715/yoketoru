@@ -55,8 +55,9 @@ namespace yoketoru
             for (int i = 0; i < LabelMax; i++)
             {
                 chrLabels[i] = new Label();
+                chrLabels[i].Visible = false;
                 chrLabels[i].AutoSize = true;
-                chrLabels[i].Top = i*24 ;
+                //chrLabels[i].Top = i*24 ;
                 Controls.Add(chrLabels[i]);
                 if (i < ObstacleIndex)
                 {
@@ -110,6 +111,7 @@ namespace yoketoru
                     break;
 
                 case State.Game:
+                    chrLabels[PlayerIndex].Visible = true;
                     labelTitle.Visible = false;
                     buttonStart.Visible = false;
                     labelHighScore.Visible = false;
